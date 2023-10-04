@@ -1,1 +1,5 @@
-"Hello world" 
+Add files: git add .
+Commit files (save changes and prepare to push to cloud): git commit -m "Some message"
+Git push: git push -u origin master
+Git pull (Get files from cloud; FIRST TIME): git pull origin master
+Git pull (Everyother time): git pull
