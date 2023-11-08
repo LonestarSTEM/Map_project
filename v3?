@@ -1,0 +1,36 @@
+// Not sure if this works becuase I don't have an arduino with me atm, but let me know if this is any help. I kinda just put this together with the previous code we had and some documentation I read online. Not sure if any of this is currently working.
+// One question I had was with the pin numbers, Will we need to distinguish which ones are side A&B or will the libraries help with that. let me know.
+#include <Adafruit_MCP23X08.h>
+#include <Adafruit_MCP23X17.h>
+
+Adafruit_MCP23017 mcp; //Instantiate mcp object
+int dly=250; // 1/4 second delay
+const static int buttons[] = {8,9,10,11,12,13,14,15}; // Pins on MCP
+const static int lights[] = {0,1,2,3,4,5,6,7};//Pins on MCP
+
+void setup() {
+  Serial.begin(9600);
+  mcp.begin();
+
+  for(int x = 0; x < sizeof(buttons)/sizeof(int); x++) // Iterates through all buttons
+  {
+    mcp.pinMode(buttons[x], INPUT_PULLUP); // Places Pin "x" into a natural HIGH state
+  } 
+  for(int x = 0; x < sizeof(lights)/sizeof(int); x++) // Iterates through all LEDs
+  {
+    mcp.pinMode(lights[x], OUTPUT); // Set LEDs to output
+  } 
+
+}
+
+void loop() {
+  for(int x = 0; x < sizeof(buttons)/sizeof(int); x++) // Iterate through all buttons
+  {
+    if (mcp.digitalRead(buttons[x]) == LOW) // Check state of buttons
+    {
+        mcp.digitalWrite(lights[x], HIGH); // Turn on LED
+        delay(4000); // Wait
+        mcp.digitalWrite(lights[x], LOW); // Turn off LED
+    }
+  } // End of base loop
+}
